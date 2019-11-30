@@ -1,0 +1,19 @@
+sudo:
+  - required
+
+services:
+  - docker
+
+before_script:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+script:
+  - make
+
+deploy:
+  provider: script
+  script:
+    - docker push akqf/root-python3
+  on:
+    tags: true
+    all_branches: true
